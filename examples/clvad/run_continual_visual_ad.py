@@ -470,7 +470,7 @@ def parse_args() -> argparse.Namespace:
         help="Replay buffer size as a fraction of the average concept size (e.g. 0.20 = 20%%)",
     )
     ex.add_argument("--n-runs", type=int, default=1, help="Number of experiment runs")
-    ex.add_argument("--master-seed", type=int, default=42, help="Master seed for per-run seed generation")
+    ex.add_argument("--master-seed", type=int, default=123, help="Master seed for per-run seed generation")
     ex.add_argument("--output-dir", type=str, default=None, help="Directory for result JSON and logs")
 
     return parser.parse_args()

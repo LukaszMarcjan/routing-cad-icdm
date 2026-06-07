@@ -431,7 +431,7 @@ Common experiment-level defaults:
 | Argument | Default | Notes |
 |----------|---------|-------|
 | `--n-runs` | `1` | Number of seeded repetitions. |
-| `--master-seed` | `42` | Used to generate per-run seeds. |
+| `--master-seed` | `123` | Used to generate per-run seeds (master seed `123` derives the run seed `33158374`). |
 | `--replay-buffer-fraction` | `0.2` | Replay budget as a fraction of average concept size. |
 | `--resize` | model default unless set | Paper commands in this artifact use `--resize 256`. |
 | `--threshold-quantile` | model default, usually `0.99` | Used when no fixed image-score threshold is supplied. |

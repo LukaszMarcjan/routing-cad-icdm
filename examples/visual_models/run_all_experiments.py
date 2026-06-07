@@ -110,7 +110,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--dry-run", action="store_true", help="Print commands without executing them")
 
     parser.add_argument("--n-runs", type=int, default=1, help="Number of seeded runs per job")
-    parser.add_argument("--master-seed", type=int, default=42, help="Master seed")
+    parser.add_argument("--master-seed", type=int, default=123, help="Master seed")
 
     ds = parser.add_argument_group("dataset")
     ds.add_argument("--registry-path", type=str, default=None, help="Optional visual dataset registry JSON path")
