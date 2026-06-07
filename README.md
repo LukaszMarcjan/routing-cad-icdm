@@ -203,6 +203,36 @@ or training models:
 python3 -m pytest tests/examples/test_smoke_runners.py tests/output/test_visual_runner_checkpointing.py -q
 ```
 
+### Reproducibility Checklist
+
+| Checklist topic | Artifact coverage |
+|-----------------|-------------------|
+| Dependencies | `pyproject.toml` declares core dependencies; `requirements.txt` lists the full runtime stack used by the visual experiments. |
+| Datasets and splits | `icdm-dataset-description.md` gives dataset statistics, download links, official train/test split handling, excluded data, and preprocessing. |
+| Training code | `examples/clvad/run_continual_visual_ad.py`, `examples/clvad/run_continual_visual_ad_levels.py`, and `examples/clvad/run_multi_expert_v2.py`. |
+| Evaluation code | Image, pixel, continual, timing, memory, and routing metrics are implemented under `src/pyclad/metrics/` and `src/pyclad/callbacks/evaluation/`. |
+| Pretrained models | No paper-specific trained checkpoints are redistributed. Paper experiments train anomaly experts from public dataset splits and use public ImageNet-pretrained Torch/Torchvision feature extractors. |
+| Runs and seeds | Runners accept `--n-runs` and `--master-seed`; the paper reports one aggregate per method-scenario configuration, and table standard deviations are across final-step category values rather than random seeds. |
+| Hyperparameters | CLI overrides are listed in `--help`; model defaults live in `src/pyclad/models/*/config.py`; raw overrides can be supplied with `--config-file` or `--config-json`. |
+| Runtime and memory | Output JSON files include `run_status.elapsed_seconds`, `time_evaluation_callback`, and `memory_usage_callback`. |
+
+The following commands produce the JSON result files used to assemble the paper
+tables. Replace `/data` with a directory containing `mvtec_ad` and `VisA`.
+The paper uses `--resize 256`, ImageNet-pretrained ResNet-18 feature
+extractors, replay buffer fraction `0.2`, and train-normal pixel threshold
+quantile `0.95`.
+
+| Result block | Command |
+|--------------|---------|
+| Single-model baselines | `python3 examples/visual_models/run_all_experiments.py --datasets-root /data --benchmarks mvtec visa --models padim patchcore cfa fastflow stfpm --strategies naive replay cumulative --eval-level both --resize 256 --backbone resnet18 --pretrained --pixel-threshold-mode train-quantile --pixel-threshold-quantile 0.95 --n-runs 1 --master-seed 42` |
+| CL expert baselines | `python3 examples/visual_models/run_all_experiments.py --datasets-root /data --benchmarks mvtec visa --models padim patchcore cfa --strategies cl --eval-level both --resize 256 --backbone resnet18 --pretrained --pixel-threshold-mode train-quantile --pixel-threshold-quantile 0.95 --n-runs 1 --master-seed 42` |
+| NSR (3) | `python3 examples/clvad/run_multi_expert_v2.py --expert-types padim,patchcore,cfa --expert-assignment best --router min_score --benchmark mvtec --root /data/mvtec_ad --step-schedule 10-1x5 --eval-level both --resize 256 --backbone resnet18 --pretrained --pixel-threshold-mode train-quantile --pixel-threshold-quantile 0.95 --n-runs 1 --master-seed 42` |
+| NSR (5) | `python3 examples/clvad/run_multi_expert_v2.py --expert-types padim,patchcore,cfa,fastflow,stfpm --expert-assignment best --router min_score --benchmark mvtec --root /data/mvtec_ad --step-schedule 10-1x5 --eval-level both --resize 256 --backbone resnet18 --pretrained --pixel-threshold-mode train-quantile --pixel-threshold-quantile 0.95 --n-runs 1 --master-seed 42` |
+
+The paper evaluates 126 method-scenario configurations. Runtime measurements
+were collected on GPU compute nodes with 2 NVIDIA L40 and 2 NVIDIA H100
+accelerators; see `icdm-dataset-description.md` for the runtime summary table.
+
 Or drive a full sweep over models, strategies and benchmarks with the batch
 orchestrator:
 

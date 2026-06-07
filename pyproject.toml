@@ -39,13 +39,6 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 
-#[project.urls]
-#Homepage = "https://example.com"
-#Documentation = "https://readthedocs.org"
-#Repository = "https://github.com/me/spam.git"
-#Issues = "https://github.com/me/spam/issues"
-#Changelog = "https://github.com/me/spam/blob/master/CHANGELOG.md"
-
 [project.optional-dependencies]
 dev = ["black>=24.4", "flake8>=7.1.0", "isort>=5.13.0", "pytest>=8.2.2"]
 

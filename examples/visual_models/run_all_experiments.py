@@ -35,7 +35,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parents[1]
 CLVAD_RUNNER = PROJECT_ROOT / "examples" / "clvad" / "run_continual_visual_ad_levels.py"
 CLVAD_CL_RUNNER = PROJECT_ROOT / "examples" / "clvad" / "run_continual_visual_ad_cl.py"
-DEFAULT_DATASETS_ROOT = PROJECT_ROOT / "src" / "pyclad" / "data" / "datasets" / "visual_datasets"
+DEFAULT_DATASETS_ROOT = Path("src") / "pyclad" / "data" / "datasets" / "visual_datasets"
 BATCH_LOG_FILENAME = "run_all_experiments.log"
 LOG_FORMAT = "%(asctime)s  %(levelname)-8s  %(message)s"
 
