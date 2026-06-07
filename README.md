@@ -77,7 +77,7 @@ The paper compares non-routed baselines with routed normality-expert variants:
 | Assignment-based NSR (3) | `--expert-assignment best --expert-types padim,patchcore,cfa` | Chooses the detector family per task from PaDiM, PatchCore, and CFA |
 | Assignment-based NSR (5) | `--expert-assignment best --expert-types padim,patchcore,cfa,fastflow,stfpm` | Chooses the detector family per task from all five expert families |
 
-Replay buffer budgeting supports three modes: `fixed` (fixed total size), `avg-concept-fraction` (fraction of average concept size), and `per-concept-budget` (fixed budget multiplied by number of concepts seen).
+Replay strategies size their buffer as a fraction of the average concept size, controlled by `--replay-buffer-fraction` (default `0.2`).
 
 ### Metrics
 
