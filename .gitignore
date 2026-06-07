@@ -175,3 +175,4 @@ lightning_logs
 /src/pyclad/models/draem/
 /bsubs_all/busbs/
 /examples/visual_models/plot_multidataset_lineplot.py
+/results_icdm/
